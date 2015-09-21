@@ -84,7 +84,22 @@ Here is a sample snippet of `agent.conf`.
 		"bathPath":"C:\\mySampleCommands"
 	}
 ```
-* Sample params for SWATHub System Operation `CallAPI`, provided that the external command file is named `sampleCommand.json`
+* Sample command file named `sampleCommand.json`
+```
+{
+	"updateResultStatus":{
+		"sql":"update result set status = 'success' where id = ?",
+		"params":[
+			{
+				"name":"id",
+				"type":"integer",
+				"default":1
+			}
+		]				
+	}	
+}
+```
+* Sample params for SWATHub System Operation `CallAPI`
  * URL: `http://localhost:5555/mysql/`
  * Parameters: `commandFile=samplecommand.json&command=updateResultStatus&id=8888`
  * Variable Name: `updateCount` for instance
