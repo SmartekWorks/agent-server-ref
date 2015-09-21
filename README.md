@@ -54,7 +54,7 @@ Here is a sample snippet of `agent.conf`.
 
 ### Update MySQL database
 
-* Sample command configuration in `agent.conf`
+* Sample command configuration in `agent.conf` or external `command file`
 ```
 	"updateResultStatus":{
 		"sql":"update result set status = 'success' where id = ?",
@@ -72,6 +72,23 @@ Here is a sample snippet of `agent.conf`.
  * Parameters: `command=updateResultStatus&id=8888`, if `id` is not set, the default value `1` will be used
  * Variable Name: `updateCount` for instance, and `@{updateCount}` could be referred in the later operations within the same **Test Scenario**
  
+### Use external DB command files
+
+* SQL commands can be stored in several external files and invoked in the test case execution run time. The `basePath` property should be set in this case. If `basePath` is not set, the commands inside `agent.conf` will be used instead.
+```
+	"properties":{
+		"driverName":"com.mysql.jdbc.Driver",
+		"connString":"jdbc:mysql://localhost:3306/sample?useUnicode=yes&characterEncoding=UTF-8",
+		"username":"user",
+		"password":"pass",
+		"bathPath":"C:\\mySampleCommands"
+	}
+```
+* Sample params for SWATHub System Operation `CallAPI`, provided that the external command file is named `sampleCommand.json`
+ * URL: `http://localhost:5555/mysql/`
+ * Parameters: `commandFile=samplecommand.json&command=updateResultStatus&id=8888`
+ * Variable Name: `updateCount` for instance
+
 ### List a directory in Windows
  
 * Sample command configuration in `agent.conf`

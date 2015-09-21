@@ -1,0 +1,22 @@
+{
+	"getResultCount":{
+		"sql":"select count(*) from result where status = ?",
+		"params":[
+			{
+				"name":"status",
+				"type":"string",
+				"default":"success"
+			}
+		]
+	},
+	"updateResultStatus":{
+		"sql":"update result set status = 'success' where id = ?",
+		"params":[
+			{
+				"name":"id",
+				"type":"integer",
+				"default":1
+			}
+		]
+	}
+}
