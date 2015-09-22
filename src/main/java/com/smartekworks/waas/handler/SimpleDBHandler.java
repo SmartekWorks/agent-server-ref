@@ -144,13 +144,9 @@ public class SimpleDBHandler extends AbstractHandler {
 			rs.close();
 		} else {
 			int updateQuery = statement.executeUpdate();
-			if (updateQuery == 0) {
-				throw new SQLException("executeUpdate error!");
-			} else {
-				LinkedHashMap<String, Object> updateResult = new LinkedHashMap<>();
-				updateResult.put("updateResult", updateQuery);
-				retValue.add(updateResult);
-			}
+			LinkedHashMap<String, Object> updateResult = new LinkedHashMap<>();
+			updateResult.put("updateResult", updateQuery);
+			retValue.add(updateResult);
 		}
 
 		statement.close();
