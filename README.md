@@ -81,7 +81,7 @@ Here is a sample snippet of `agent.conf`.
 		"connString":"jdbc:mysql://localhost:3306/sample?useUnicode=yes&characterEncoding=UTF-8",
 		"username":"user",
 		"password":"pass",
-		"bathPath":"C:\\mySampleCommands"
+		"basePath":"C:\\mySampleCommands"
 	}
 ```
 * Sample command file named `sampleCommands.json`
