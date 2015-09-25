@@ -21,7 +21,7 @@ import java.util.Map.Entry;
 public class SimpleDBHandler extends AbstractHandler {
 
 	private BasicDataSource ds = new BasicDataSource();
-	File basePath = null;
+	private File basePath = null;
 	private JSONObject commands = null;
 
 	public SimpleDBHandler() {
@@ -67,7 +67,7 @@ public class SimpleDBHandler extends AbstractHandler {
 			JSONObject jsonIn = new JSONObject(jb.toString());
 
 			if (jsonIn.has("commandFile")) {
-				File commandFile = basePath==null?new File(basePath, jsonIn.getString("commandFile")):new File(jsonIn.getString("commandFile"));
+				File commandFile = basePath!=null?new File(basePath, jsonIn.getString("commandFile")):new File(jsonIn.getString("commandFile"));
 				if (commandFile.exists() && !commandFile.isDirectory()) {
 					commands = new JSONObject(FileUtils.readFileToString(commandFile, "UTF-8"));
 				}
