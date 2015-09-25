@@ -84,7 +84,7 @@ Here is a sample snippet of `agent.conf`.
 		"bathPath":"C:\\mySampleCommands"
 	}
 ```
-* Sample command file named `sampleCommand.json`
+* Sample command file named `sampleCommands.json`
 ```
 {
 	"updateResultStatus":{
@@ -101,7 +101,7 @@ Here is a sample snippet of `agent.conf`.
 ```
 * Sample params for SWATHub System Operation `CallAPI`
  * URL: `http://localhost:5555/mysql/`
- * Parameters: `commandFile=samplecommand.json&command=updateResultStatus&id=8888`
+ * Parameters: `commandFile=sampleCommands.json&command=updateResultStatus&id=8888`
  * Variable Name: `updateCount` for instance
 
 ### List a directory in Windows
