@@ -54,6 +54,7 @@ public class SimpleDBHandler extends AbstractHandler {
 	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		LinkedHashMap<String, Object> retMap = new LinkedHashMap<>();
 		String charset = "UTF-8";
+		JSONObject commands = this.commands;
 		int httpStatus = HttpServletResponse.SC_OK;
 
 		try {
