@@ -54,7 +54,7 @@ Here is a sample snippet of `agent.conf`.
 
 ### Update MySQL database
 
-* Sample command configuration in `agent.conf` or external `command file`
+* Sample command
 ```
 	"updateResultStatus":{
 		"sql":"update result set status = 'success' where id = ?",
@@ -71,16 +71,32 @@ Here is a sample snippet of `agent.conf`.
  * URL: `http://localhost:5555/mysql/`, please keep in mind the last `/` is a **MUST**
  * Parameters: `command=updateResultStatus&id=8888`, if `id` is not set, the default value `1` will be used
  * Variable Name: `updateCount` for instance, and `@{updateCount}` could be referred in the later operations within the same **Test Scenario**
- 
-### Use external DB command files
 
-* SQL commands can be stored in several external files and invoked in the test case execution run time. The `basePath` property should be set in this case. If `basePath` is not set, the commands inside `agent.conf` will be used instead.
+### List a directory in Windows
+ 
+* Sample command
+```
+ 	"dir":{
+		"batch":"C:\\Dev\\myWorkspace\\agent-server\\target\\dir.bat",
+		"params":[
+			{
+				"name":"folder",
+				"type":"string",
+				"default":"c:\\"
+			}
+		]
+	}
+```
+* Sample params for SWATHub System Operation `CallAPI`
+  * URL: `http://localhost:5555/batch/`
+  * Parameters: `command=dir&folder=c:\tmp`
+  * Variable Name: better leave as blank, as the batch execution result would be saved as a file into the final evidence.
+ 
+### Use external command files
+
+* Commands can be stored in several external files and invoked in the test case execution run time. The `basePath` property should be set in this case. If `basePath` is not set, the path of AgentServer.jar file will be used instead.
 ```
 	"properties":{
-		"driverName":"com.mysql.jdbc.Driver",
-		"connString":"jdbc:mysql://localhost:3306/sample?useUnicode=yes&characterEncoding=UTF-8",
-		"username":"user",
-		"password":"pass",
 		"basePath":"C:\\mySampleCommands"
 	}
 ```
@@ -102,24 +118,5 @@ Here is a sample snippet of `agent.conf`.
 * Sample params for SWATHub System Operation `CallAPI`
  * URL: `http://localhost:5555/mysql/`
  * Parameters: `commandFile=sampleCommands.json&command=updateResultStatus&id=8888`
+     * If `commandFile` is not set or file does not exists, the commands inside `agent.conf` will be used instead.
  * Variable Name: `updateCount` for instance
-
-### List a directory in Windows
- 
-* Sample command configuration in `agent.conf`
-```
- 	"dir":{
-		"batch":"C:\\Dev\\myWorkspace\\agent-server\\target\\dir.bat",
-		"params":[
-			{
-				"name":"folder",
-				"type":"string",
-				"default":"c:\\"
-			}
-		]
-	}
-```
-* Sample params for SWATHub System Operation `CallAPI`
-  * URL: `http://localhost:5555/batch/`
-  * Parameters: `command=dir&folder=c:\tmp`
-  * Variable Name: better leave as blank, as the batch execution result would be saved as a file into the final evidence.
