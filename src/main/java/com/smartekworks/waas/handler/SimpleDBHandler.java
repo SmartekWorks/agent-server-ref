@@ -97,6 +97,7 @@ public class SimpleDBHandler extends AbstractHandler {
 				retMap.put("extraEvidences", extraEvidences);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			retMap.put("code", "DBERROR");
 			retMap.put("message", e.getMessage());
 			httpStatus = HttpServletResponse.SC_NOT_FOUND;
@@ -112,11 +113,9 @@ public class SimpleDBHandler extends AbstractHandler {
 
 	private List<LinkedHashMap<String, Object>> executeSql(JSONObject command, JSONObject values) throws SQLException {
 		List<LinkedHashMap<String, Object>> retValue = new ArrayList<>();
-
-		Connection connection = ds.getConnection();
 		String queryString = command.getString("sql");
 		JSONArray params = command.getJSONArray("params");
-		PreparedStatement statement = connection.prepareStatement(queryString);
+
 		for (int i = 0; i < params.length(); i++) {
 			JSONObject param = params.getJSONObject(i);
 			if ("string".equals(param.getString("type"))) {
@@ -126,7 +125,7 @@ public class SimpleDBHandler extends AbstractHandler {
 				} else {
 					value = values.getString(param.getString("name"));
 				}
-				statement.setString(i + 1, value);
+				queryString = queryString.replaceFirst("\\?", "'" + value + "'");
 			} else if ("integer".equals(param.getString("type"))) {
 				int value;
 				if (values.isNull(param.getString("name"))) {
@@ -134,10 +133,13 @@ public class SimpleDBHandler extends AbstractHandler {
 				} else {
 					value = values.getInt(param.getString("name"));
 				}
-				statement.setInt(i + 1, value);
+				queryString = queryString.replaceFirst("\\?", String.valueOf(value));
 			}
 		}
+		System.out.println("SQL query string: " + queryString);
 
+		Connection connection = ds.getConnection();
+		PreparedStatement statement = connection.prepareStatement(queryString);
 		// sql query to retrieve values from the specified table.
 		if (queryString.trim().toLowerCase().startsWith("select")) {
 			ResultSet rs = statement.executeQuery();
